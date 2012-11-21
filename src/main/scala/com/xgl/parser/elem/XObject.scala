@@ -1,6 +1,7 @@
 package com.xgl.parser.elem
 
 import scala.xml.Node
+import collection.JavaConversions.seqAsJavaList
 
 trait XObjectDataSource {
   val objectDataMap: Map[Int, XObject]
@@ -21,4 +22,5 @@ class XObject(val xgl: Node, val parentMeshDataMap: Map[Int, Mesh], val parentXO
   extends MeshParentWithDefines with MeshDataSourceAndCollector with XObjectsParentWithDefines with XObjectDataSourceAndCollector {
   override lazy val meshDataMap = parsedMeshDefs ++ parentMeshDataMap
   override lazy val objectDataMap = parsedXObjectDefs ++ parentXObjectDataMap
+  def objectsCollection(): java.util.List[XObject] = seqAsJavaList(objects)
 }

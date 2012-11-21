@@ -1,6 +1,7 @@
 package com.xgl.parser.elem
 
 import scala.xml.Node
+import scala.collection.JavaConversions.seqAsJavaList
 
 trait MeshDataSource {
   val meshDataMap: Map[Int, Mesh]
@@ -23,5 +24,6 @@ trait MeshParentWithDefines extends XGLParserNode with MeshDataSource {
 }
 
 class Mesh(val xgl: Node) extends FacesParent with PositionDataSourceAndCollector {
-    override lazy val positionDataMap = parsedPositionDefs
+  override lazy val positionDataMap = parsedPositionDefs
+  def facesCollection(): java.util.List[Face] = seqAsJavaList(faces)
 }
