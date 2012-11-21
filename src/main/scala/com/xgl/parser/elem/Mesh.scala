@@ -23,7 +23,7 @@ trait MeshParentWithDefines extends XGLParserNode with MeshDataSource {
   }
 }
 
-class Mesh(val xgl: Node) extends FacesParent with PositionDataSourceAndCollector {
+class Mesh(val xgl: Node) extends FacesParent with PositionDataSourceAndCollector with NormalDataSourceAndCollector {
   override lazy val positionDataMap = parsedPositionDefs
-  def facesCollection(): java.util.List[Face] = seqAsJavaList(faces)
+  override lazy val normalDataMap = parsedNormalDefs
 }
