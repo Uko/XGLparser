@@ -1,6 +1,6 @@
 package com.xgl.parser.elem
 
-import scala.xml.Node
+import xml.{MalformedAttributeException, Node}
 
 trait PositionDataSource {
   val positionDataMap: Map[Int, Position]
@@ -12,16 +12,14 @@ trait PositionDataSourceAndCollector extends XGLParserNode with PositionDataSour
 }
 
 trait PositionParent extends XGLParserNode with PositionDataSource {
-  lazy val position: Option[Position] = {
+  lazy val position: Position = {
     val ref = xgl \ "PREF"
-    if (!ref.isEmpty) Some(recoverPositionDef(ref.text.trim().toInt))
+    if (!ref.isEmpty) recoverPositionDef(ref.text.trim().toInt)
     else (xgl \ "P").find(_.attribute("ID").isEmpty) match {
-      case None => None
-      case Some(meshNode) => Some(new Position(meshNode))
+      case None => throw new MalformedAttributeException("Missing position deffinition")
+      case Some(meshNode) => new Position(meshNode)
     }
   }
 }
 
-class Position(val xgl: Node) extends XGLVactorParserNode {
-    
-}
+class Position(val xgl: Node) extends XGLVactorParserNode {}
