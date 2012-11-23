@@ -12,12 +12,12 @@ trait PositionDataSourceAndCollector extends XGLParserNode with PositionDataSour
 }
 
 trait PositionParent extends XGLParserNode with PositionDataSource {
-  lazy val position: Position = {
+  lazy val position: Option[Position] = {
     val ref = xgl \ "PREF"
-    if (!ref.isEmpty) recoverPositionDef(ref.text.trim().toInt)
+    if (!ref.isEmpty) Some(recoverPositionDef(ref.text.trim().toInt))
     else (xgl \ "P").find(_.attribute("ID").isEmpty) match {
-      case None => null
-      case Some(meshNode) => new Position(meshNode)
+      case None => None
+      case Some(meshNode) => Some(new Position(meshNode))
     }
   }
 }

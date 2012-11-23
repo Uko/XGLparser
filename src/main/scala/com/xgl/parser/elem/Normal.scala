@@ -12,12 +12,12 @@ trait NormalDataSourceAndCollector extends XGLParserNode with NormalDataSource {
 }
 
 trait NormalParent extends XGLParserNode with NormalDataSource {
-  lazy val normal: Normal = {
+  lazy val normal: Option[Normal] = {
     val ref = xgl \ "NREF"
-    if (!ref.isEmpty) recoverNormalDef(ref.text.trim().toInt)
+    if (!ref.isEmpty) Some(recoverNormalDef(ref.text.trim().toInt))
     else (xgl \ "N").find(_.attribute("ID").isEmpty) match {
-      case None => null
-      case Some(meshNode) => new Normal(meshNode)
+      case None => None
+      case Some(meshNode) => Some(new Normal(meshNode))
     }
   }
 }

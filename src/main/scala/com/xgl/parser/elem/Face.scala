@@ -24,5 +24,5 @@ class Face(val xgl: Node, val positionDataMap: Map[Int, Position], val normalDat
 class FaceVertex(val xgl: Node, val positionDataMap: Map[Int, Position], val normalDataMap: Map[Int, Normal])
   extends PositionParent with PositionDataSource with NormalParent with NormalDataSource{
 
-  lazy val normalSet = normal != null
+  lazy val normalSet = normal.isDefined
 }

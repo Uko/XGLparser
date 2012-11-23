@@ -13,12 +13,12 @@ trait MeshDataSourceAndCollector extends XGLParserNode with MeshDataSource {
 }
 
 trait MeshParentWithDefines extends XGLParserNode with MeshDataSource {
-  lazy val mesh: Mesh = {
+  lazy val mesh: Option[Mesh] = {
     val ref = xgl \ "MESHREF"
-    if (!ref.isEmpty) recoverMeshDef(ref.text.trim().toInt)
+    if (!ref.isEmpty) Some(recoverMeshDef(ref.text.trim().toInt))
     else (xgl \ "MESH").find(_.attribute("ID").isEmpty) match {
-      case None => null
-      case Some(meshNode) => new Mesh(meshNode)
+      case None => None
+      case Some(meshNode) => Some(new Mesh(meshNode))
     }
   }
 }
