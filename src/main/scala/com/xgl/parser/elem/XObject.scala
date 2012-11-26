@@ -20,7 +20,9 @@ trait XObjectsParentWithDefines extends XGLParserNode with XObjectDataSource {
 }
 
 class XObject(val xgl: Node, val parentMeshDataMap: Map[Int, Mesh], val parentXObjectDataMap: Map[Int, XObject])
-  extends MeshParentWithDefines with MeshDataSourceAndCollector with XObjectsParentWithDefines with XObjectDataSourceAndCollector {
+  extends MeshParentWithDefines with MeshDataSourceAndCollector
+  with XObjectsParentWithDefines with XObjectDataSourceAndCollector
+  with TransformParent{
 
   override lazy val meshDataMap = parsedMeshDefs ++ parentMeshDataMap
   override lazy val objectDataMap = parsedXObjectDefs ++ parentXObjectDataMap

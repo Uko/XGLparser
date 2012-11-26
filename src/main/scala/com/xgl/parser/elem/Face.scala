@@ -13,7 +13,7 @@ trait FacesParent extends XGLParserNode {
 class Face(val xgl: Node, val positionDataMap: Map[Int, Position], val normalDataMap: Map[Int, Normal])
   extends PositionDataSource with NormalDataSource {
 
-  private def vertex(i: Int) = new FaceVertex((xgl \ s"FV$i")(0), positionDataMap, normalDataMap)
+  private def vertex(i: Int) = new FaceVertex((xgl \ "FV%i".format(i))(0), positionDataMap, normalDataMap)
   val vertex1 = vertex(1)
   val vertex2 = vertex(2)
   val vertex3 = vertex(3)
